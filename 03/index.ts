@@ -17,16 +17,7 @@ class TreeMap {
 		const rows = inputAsStringArray(__dirname, file)
 		this.width = rows[0].length
 		this.height = rows.length
-		this.map = TreeMap.parse(rows)
-	}
-
-	checkForTree(x: number, y: number): number {
-		const row = this.map[y]
-		return 1 & (row >> x % this.width)
-	}
-
-	static parse(input: string[]) {
-		return input.map((row) => {
+		this.map = rows.map((row) => {
 			const binary = Array.from(row)
 				.reverse()
 				.map((char) => (char === Terrain.Tree ? '1' : 0))
@@ -34,33 +25,41 @@ class TreeMap {
 			return parseInt(binary, 2)
 		})
 	}
-}
 
-function traverse(map: TreeMap, [dx, dy]: Slope) {
-	let x = 0
-	let y = 0
-	let trees = 0
-	while (y < map.height) {
-		x += dx
-		y += dy
-		if (y >= map.height) break
-		trees += map.checkForTree(x, y)
+	checkForTree(x: number, y: number): number {
+		return 1 & (this.map[y] >> x % this.width)
 	}
-	return trees
-}
 
-function traverseMulti(map, slopes: Slope[]) {
-	return slopes.reduce((acc, slope) => acc * traverse(map, slope), 1)
+	reachedBottom(y: number) {
+		return y >= this.height
+	}
 }
 
 const mapTest = new TreeMap('test.txt')
 const mapReal = new TreeMap('input.txt')
 
 // Part A
+function traverse(map: TreeMap, [dx, dy]: Slope) {
+	let x = 0
+	let y = 0
+	let trees = 0
+	while (!map.reachedBottom(y)) {
+		x += dx
+		y += dy
+		if (map.reachedBottom(y)) break
+		trees += map.checkForTree(x, y)
+	}
+	return trees
+}
+
 logTest('A', traverse(mapTest, [3, 1]))
 logAnswer('A', traverse(mapReal, [3, 1]))
 
 // Part B
+function traverseMulti(map: TreeMap, slopes: Slope[]) {
+	return slopes.reduce((acc, slope) => acc * traverse(map, slope), 1)
+}
+
 const slopes: Slope[] = [
 	[1, 1],
 	[3, 1],
