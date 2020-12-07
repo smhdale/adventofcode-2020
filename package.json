@@ -1,0 +1,63 @@
+{
+  "name": "adventofcode-2020",
+  "version": "1.0.0",
+  "scripts": {
+    "day": "bin/index.ts",
+    "lint": "eslint . --ext ts"
+  },
+  "repository": "https://github.com/github:smhdale/adventofcode-2020",
+  "author": "Sam Dale <smhdale@live.com.au>",
+  "license": "Unlicense",
+  "dependencies": {
+    "@types/node": "^14.14.10",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.2.0",
+    "husky": "^4.3.5",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "ts-node": "^9.1.0",
+    "typescript": "^4.1.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": 2
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": true,
+    "trailingComma": "es5"
+  },
+  "lint-staged": {
+    "**/*.{ts,vue}": "vue-cli-service lint"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "yarn lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "volta": {
+    "node": "15.3.0"
+  }
+}
