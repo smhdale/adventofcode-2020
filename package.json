@@ -45,11 +45,8 @@
     "trailingComma": "es5"
   },
   "lint-staged": {
-    "**/*.{ts,vue}": "vue-cli-service lint"
-  },
-  "lint-staged": {
     "**/*.ts": [
-      "yarn lint"
+      "yarn lint --fix"
     ]
   },
   "husky": {
