@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import { inputAsNumberArray, answer } from '../helpers'
+import { inputAsNumberArray, logAnswer } from '../helpers'
 
 // Setup
 const nums = inputAsNumberArray(__dirname, 'input.txt')
@@ -10,7 +10,7 @@ const target = 2020
 for (let a = 0; a < count - 1; a++) {
 	for (let b = a + 1; b < count; b++) {
 		if (nums[a] + nums[b] === target) {
-			answer('A', nums[a] * nums[b])
+			logAnswer('A', nums[a] * nums[b])
 		}
 	}
 }
@@ -20,7 +20,7 @@ for (let a = 0; a < count - 2; a++) {
 	for (let b = a + 1; b < count - 1; b++) {
 		for (let c = b + 1; c < count; c++) {
 			if (nums[a] + nums[b] + nums[c] === target) {
-				answer('B', nums[a] * nums[b] * nums[c])
+				logAnswer('B', nums[a] * nums[b] * nums[c])
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { inputAsStringArray, answer } from '../helpers'
+import { inputAsStringArray, logAnswer } from '../helpers'
 
 // Setup
 const regex = /(\d+)-(\d+) ([a-z]): ([a-z]+)/
@@ -19,7 +19,7 @@ const validA = entries.reduce((acc, { password, char, min, max }) => {
 	}, 0)
 	return acc + Number(count >= min && count <= max)
 }, 0)
-answer('A', validA)
+logAnswer('A', validA)
 
 // Part B
 const validB = entries.reduce((acc, { password, char, min, max }) => {
@@ -27,4 +27,4 @@ const validB = entries.reduce((acc, { password, char, min, max }) => {
 	const b = Number(password[max - 1] === char)
 	return acc + (a ^ b)
 }, 0)
-answer('B', validB)
+logAnswer('B', validB)

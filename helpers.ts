@@ -21,7 +21,13 @@ export function inputAsNumberArray(...paths: string[]): number[] {
 
 // Logging
 
-export function answer(part: 'A' | 'B', ...logs: any[]) {
+export function logTest(part: 'A' | 'B', ...logs: any[]) {
+	console.log(chalk.grey(`Part ${part} test case answer:`))
+	console.log(...logs)
+	console.log()
+}
+
+export function logAnswer(part: 'A' | 'B', ...logs: any[]) {
 	console.log(chalk.green(`Part ${part} answer:`))
 	console.log(...logs)
 	console.log()
