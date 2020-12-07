@@ -15,8 +15,6 @@ if (!fs.existsSync(dir) || !fs.existsSync(exe)) {
 // Load and execute the day's code
 const main = async () => {
 	console.log(`\nRunning code for DAY ${day}...\n`)
-	const script = await import(exe)
-	await script()
-	console.log(``)
+	await import(exe)
 }
 main()
