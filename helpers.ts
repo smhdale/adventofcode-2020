@@ -36,6 +36,15 @@ export function inputAsGroupedStringArray(...paths: string[]): string[][] {
 	return groups
 }
 
+// Counting
+
+export function sumEach<T extends any>(
+	array: T[],
+	condition: (input: T) => boolean | number
+): number {
+	return array.reduce((acc, item) => acc + Number(condition(item)), 0)
+}
+
 // Logging
 
 export function logTest(part: 'A' | 'B', ...logs: any[]) {
