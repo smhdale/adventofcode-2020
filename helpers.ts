@@ -11,8 +11,8 @@ export function input(...paths: string[]): string {
 
 export function inputAsStringArray(...paths: string[]): string[] {
 	return input(...paths)
+		.trim()
 		.split(/\r?\n/)
-		.filter(Boolean)
 }
 
 export function inputAsNumberArray(...paths: string[]): number[] {

@@ -1,4 +1,3 @@
-import { readFileSync } from 'fs'
 import { inputAsNumberArray, logAnswer } from '../helpers'
 
 // Setup
