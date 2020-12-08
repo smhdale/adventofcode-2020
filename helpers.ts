@@ -1,12 +1,12 @@
-import fs = require('fs')
-import path = require('path')
-import chalk = require('chalk')
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import * as chalk from 'chalk'
 
 // File I/O
 
 export function input(...paths: string[]): string {
-	const target = path.resolve(...paths)
-	return String(fs.readFileSync(target))
+	const target = resolve(...paths)
+	return String(readFileSync(target))
 }
 
 export function inputAsStringArray(...paths: string[]): string[] {
@@ -40,7 +40,7 @@ export function inputAsGroupedStringArray(...paths: string[]): string[][] {
 
 export function sumEach<T extends any>(
 	array: T[],
-	condition: (input: T) => boolean | number
+	condition: (item: T) => boolean | number
 ): number {
 	return array.reduce((acc, item) => acc + Number(condition(item)), 0)
 }
