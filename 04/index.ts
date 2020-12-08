@@ -1,4 +1,4 @@
-import { inputAsStringArray, logTest, logAnswer } from '../helpers'
+import { inputAsGroupedStringArray, logTest, logAnswer } from '../helpers'
 
 // Setup
 type Height = {
@@ -36,47 +36,29 @@ function createPassportFromRaw(raw: string): Passport {
 		return { key, value }
 	})
 	const getKeyValueFromRaw = (key: keyof Passport) => {
-		const rawValue = fields.find((field) => field.key === key).value
+		const raw = fields.find((field) => field.key === key)
+		if (!raw) return undefined
 		switch (key) {
 			case 'byr':
 			case 'iyr':
 			case 'eyr':
-				return Number(rawValue)
+				return Number(raw.value)
 			case 'hgt':
-				return parseHeight(rawValue)
+				return parseHeight(raw.value)
 			default:
-				return rawValue
+				return raw.value
 		}
 	}
-
-	const passport = {}
-	for (const key of passportKeys) {
-		try {
-			passport[key] = getKeyValueFromRaw(key)
-		} catch (err) {
-			// Missing key, do nothing
-		}
-	}
-	return passport
+	return passportKeys.reduce((passport, key) => {
+		passport[key] = getKeyValueFromRaw(key)
+		return passport
+	}, {})
 }
 
 function createPassportsFromRaw(file: string): Passport[] {
-	const rawData = inputAsStringArray(__dirname, file)
-	const passports = []
-	let currentPassport = []
-	const submitCurrent = () => {
-		passports.push(createPassportFromRaw(currentPassport.join(' ')))
-		currentPassport = []
-	}
-
-	// Build passport data lines from raw data
-	for (const line of rawData) {
-		if (line) currentPassport.push(line)
-		else submitCurrent()
-	}
-	submitCurrent()
-
-	return passports
+	return inputAsGroupedStringArray(__dirname, file).map((rawPassport) =>
+		createPassportFromRaw(rawPassport.join(' '))
+	)
 }
 
 const testPassports = createPassportsFromRaw('test.txt')

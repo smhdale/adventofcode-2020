@@ -19,6 +19,23 @@ export function inputAsNumberArray(...paths: string[]): number[] {
 	return inputAsStringArray(...paths).map(Number)
 }
 
+// String array grouped by blank lines
+export function inputAsGroupedStringArray(...paths: string[]): string[][] {
+	const array = inputAsStringArray(...paths)
+	const groups = []
+	let group = []
+	const finaliseGroup = () => {
+		groups.push([...group])
+		group = []
+	}
+	for (const line of array) {
+		if (line) group.push(line)
+		else finaliseGroup()
+	}
+	if (group.length) finaliseGroup()
+	return groups
+}
+
 // Logging
 
 export function logTest(part: 'A' | 'B', ...logs: any[]) {
