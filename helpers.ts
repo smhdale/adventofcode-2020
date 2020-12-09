@@ -36,13 +36,25 @@ export function inputAsGroupedStringArray(...paths: string[]): string[][] {
 	return groups
 }
 
-// Counting
+// Counting & enumeration
 
-export function sumEach<T extends any>(
+export function sumEach<T>(
 	array: T[],
 	condition: (item: T) => boolean | number
 ): number {
 	return array.reduce((acc, item) => acc + Number(condition(item)), 0)
+}
+
+export function everyPair<T>(array: T[]): [T, T][] {
+	const pairs = []
+	const length = array.length
+	if (length < 2) return
+	for (let i = 0; i < length - 1; i++) {
+		for (let j = i + 1; j < length; j++) {
+			pairs.push([array[i], array[j]])
+		}
+	}
+	return pairs
 }
 
 // Logging
