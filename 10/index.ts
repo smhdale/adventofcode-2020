@@ -55,42 +55,21 @@ function buildMap(adapters: number[]): AdapterMap {
 }
 
 function countAllPathways(adapters: number[]) {
-	const sorted = adapters.sort((a, b) => a - b)
-	const length = sorted.length
+	const device = getDevice(adapters)
+	const sorted = adapters.sort((a, b) => b - a)
 
 	const map = buildMap(adapters)
-	return sumEach(adapters, (adapter) => {
-		const options = map[adapter].length
-		if (options < 2) return 0
-		return 1 << (options - 1)
+	const paths: Map<number, number> = new Map()
+
+	sorted.forEach((adapter) => {
+		const pathsFromHere = sumEach(map[adapter], (child) => {
+			return child === device ? 1 : paths.get(child)
+		})
+		paths.set(adapter, pathsFromHere || 1)
 	})
 
-	// let pathways = 1
-	// let optionalAdapters = 0
-	// for (let i = 1; i < length; i++) {
-	// 	const current = sorted[i]
-	// 	const prev = sorted[i - 1]
-	// 	if (current - prev < 3) {
-	// 		console.log([prev, current])
-	// 		pathways *= 2
-	// 	}
-	// }
-	// return pathways
-
-	// const target = Math.max(...adapters)
-	// const map = buildMap(adapters)
-	// const optionalPaths = sumEach(adapters, adapter => map[adapter].length - 1)
-	// return optionalPaths * 2
-
-	// const countTerminals = (count: number = 0, node: number = 0): number => {
-	// 	if (node === target) return 1
-	// 	return sumEach(map[node], next => countTerminals(count, next))
-	// }
-
-	// return countTerminals()
+	return paths.get(0)
 }
 
-// logTest('B', countAllPathways(TEST_ADAPTERS))
-// logAnswer('B', countAllPathways(ADAPTERS))
-
-console.log(countAllPathways(ADAPTERS))
+logTest('B', countAllPathways(TEST_ADAPTERS))
+logAnswer('B', countAllPathways(ADAPTERS))
