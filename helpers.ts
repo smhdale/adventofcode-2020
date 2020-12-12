@@ -61,6 +61,23 @@ export function everyPair<T>(array: T[]): [T, T][] {
 	return pairs
 }
 
+// Trigonometry
+
+export function toPolar(x: number, y: number): { r: number; theta: number } {
+	const r = (x ** 2 + y ** 2) ** 0.5
+	const theta = Math.atan2(y, x)
+	return { r, theta }
+}
+
+export function toCartesian(
+	r: number,
+	theta: number
+): { x: number; y: number } {
+	const x = r * Math.cos(theta)
+	const y = r * Math.sin(theta)
+	return { x, y }
+}
+
 // Logging
 
 export function logTest(part: 'A' | 'B', ...logs: any[]) {
