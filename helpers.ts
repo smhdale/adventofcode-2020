@@ -61,6 +61,25 @@ export function everyPair<T>(array: T[]): [T, T][] {
 	return pairs
 }
 
+export type FixedArray<T, L extends number, TObj = [T, ...Array<T>]> = TObj & {
+	readonly length: L
+}
+
+export function multiEnumerate<L extends number>(
+	ranges: FixedArray<[number, number], L>
+) {
+	let combos = []
+	for (const [min, max] of ranges) {
+		const newCombos = []
+		for (let i = min; i <= max; i++) {
+			if (combos.length) newCombos.push(...combos.map((c) => [...c, i]))
+			else newCombos.push([i])
+		}
+		combos = newCombos
+	}
+	return combos as FixedArray<number, L>[]
+}
+
 // Trigonometry
 
 export function toPolar(x: number, y: number): { r: number; theta: number } {
