@@ -78,6 +78,12 @@ export function toCartesian(
 	return { x, y }
 }
 
+// Object handling
+
+export function clone<T>(input: T): T {
+	return JSON.parse(JSON.stringify(input))
+}
+
 // Logging
 
 export function logTest(part: 'A' | 'B', ...logs: any[]) {
